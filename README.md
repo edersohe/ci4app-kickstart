@@ -1,20 +1,20 @@
-## Codeigniter 4 Kickstart (Development Environment with Docker Compose)
+## Codeigniter 4 Kickstart (Docker Compose Development Environment)
 
 ### Components
 
 * Codeigniter 4 App
-    - PHP-FPM 8.3 Server
-    - Enabled PHP Extensions for development with Codeigniter 4
+    - PHP-FPM Server
+    - PHP Extensions enabled for development with Codeigniter 4
 * Mercure Server (Caddy + Mercure)
     - Proxy to PHP FPM (ci4app) and AdminerEvo
     - Handle static files
     - Enable Mercure Hub (Real-Time Pub/Sub over HTTP/SSE)
-* MySQL 8.4
-    - Database use by default for app development with Codeigniter 4
+* MySQL
+    - Database used by default for app development with Codeigniter 4
 * AdminerEvo
-    - Database Administration Tool
+    - Database administration tool
 
-### Enable development Enviroment
+### Enable development enviroment
 
 ```
 sudo bash -c 'echo "127.0.0.1 ci4app.local" >> /etc/hosts'
@@ -30,8 +30,8 @@ docker compose up
 ### Install Certs for HTTPS
 
 ```
-docker volume inspect mercure_data
-docker cp mercure_data:caddy/pki/authorities/local /certs
+docker volume inspect ci4app-kickstart_mercure_data
+sudo cp -r MOUNT_POINT_FROM_INSPECT/caddy/pki/authorities/local certs
 sudo chown -R $USER:$USER certs
 ```
 
@@ -39,15 +39,13 @@ sudo chown -R $USER:$USER certs
 
 ### Urls
 
-* Codeigniter 4 App: https://ciapp.local
-* Mercure Server: https://ciapp.local/.well-known/mercure/ui/
-* AdminerEvo: https://ciapp.local/adminer
+* Codeigniter 4 App: https://ci4app.local
+* Mercure Server: https://ci4app.local/.well-known/mercure/ui/
+* AdminerEvo: https://ci4app.local/adminer
 
 
 ### ToDo
 
 * Add Redis
 * Add Mailpit
-
-
 
