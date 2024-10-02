@@ -1,0 +1,54 @@
+services:
+  # CodeIgniter application service
+  ci4app:
+    build:
+      context: .
+    volumes:
+      - ./ci4app:/var/www/html # Mount the local ci4app folder to the container
+    environment:
+      CI_ENVIRONMENT: "${CI_ENVIRONMENT}"
+      app_baseURL: "https://${CI_DOMAIN}"
+      database_default_hostname: mysql
+      database_default_database: "${MYSQL_DATABASE}"
+      database_default_username: "${MYSQL_USER}"
+      database_default_password: "${MYSQL_PASSWORD}"
+
+  # Caddy server with Mercure enabled
+  mercure:
+    image: dunglas/mercure
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile # Mount the Caddyfile from your project
+      - ./ci4app:/var/www/html # Share the same folder with ci4app for static files
+      - mercure_data:/data
+      - mercure_config:/config
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      CI_DOMAIN: "${CI_DOMAIN}"                # Set the domain you want to use
+      MERCURE_PUBLISHER_JWT: "${MERCURE_PUBLISHER_JWT}"  # Replace with your secret key
+      MERCURE_SUBSCRIBER_JWT: "${MERCURE_SUBSCRIBER_JWT}" # Replace with your secret key
+
+  # MySQL database service
+  mysql:
+    image: mysql:8.4
+    volumes:
+      - mysql_data:/var/lib/mysql # Store MySQL data in a named volume
+    environment:
+      MYSQL_ROOT_PASSWORD: "password" # Change this to your root password
+      MYSQL_DATABASE: "${MYSQL_DATABASE}"          # The default database name for your app
+      MYSQL_USER: "${MYSQL_USER}"            # The database user
+      MYSQL_PASSWORD: "${MYSQL_PASSWORD}"    # The database user password
+
+  # AdminerEvo
+  adminer:
+    image: ghcr.io/shyim/adminerevo:latest
+    environment:
+      ADMINER_DESIGN: "pepa-linha"
+      ADMINER_DEFAULT_SERVER: "mysql"
+
+# Define named volumes for data persistence
+volumes:
+  mysql_data:
+  mercure_data:
+  mercure_config:

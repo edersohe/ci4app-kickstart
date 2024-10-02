@@ -1,0 +1,31 @@
+{$CI_DOMAIN} {
+
+    # Enable Mercure
+    mercure {
+        publisher_jwt {$MERCURE_PUBLISHER_JWT}
+        subscriber_jwt {$MERCURE_SUBSCRIBER_JWT}
+        demo
+    }
+
+    # Enable adminer path
+    reverse_proxy /adminer* http://adminer:8080 {
+        header_up Host {http.host}
+        header_up X-Real-IP {remote_host}
+        header_up X-Forwarded-For {remote_host}
+    }
+
+    # Serve the CodeIgniter application from the public directory
+    root * /var/www/html/public
+
+    # Ensure that requests for Adminer and Mercure are excluded from CodeIgniter routing
+    @ci4app not path /adminer* /.well-known*
+
+    # Define the try_files directive for CodeIgniter's front controller
+    handle @ci4app {
+        try_files {path} {path}/ /index.php?{query}
+        php_fastcgi ci4app:9000
+    }
+
+    # Enable the file server for serving static files
+    file_server
+}
