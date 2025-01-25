@@ -19,7 +19,7 @@
 ```
 sudo bash -c 'echo "127.0.0.1 ci4app.local" >> /etc/hosts'
 docker build -t edersohe/ci4app .
-docker run --rm --user $(id -u):$(id -g) -v .:/var/www/html edersohe/ci4app sh -c "cd /mnt && composer create-project codeigniter4/appstarter ci4app"
+docker run --rm --user $(id -u):$(id -g) -v .:/var/www/html edersohe/ci4app composer create-project codeigniter4/appstarter ci4app
 chmod ugo+rw -R ci4app/writable
 cp .env.example .env
 docker compose up
