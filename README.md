@@ -6,31 +6,29 @@
     - PHP-FPM Server
     - PHP Extensions enabled for development with Codeigniter 4
 * Mercure Server (Caddy + Mercure)
-    - Proxy to PHP FPM (ci4app) and AdminerEvo
+    - Proxy to PHP FPM (ci4app) and PHPMyAdmin
     - Handle static files
     - Enable Mercure Hub (Real-Time Pub/Sub over HTTP/SSE)
 * MySQL
     - Database used by default for app development with Codeigniter 4
-* AdminerEvo
+* PHPMyAdmin
     - Database administration tool
 
 ### Enable development enviroment
 
 ```
 sudo bash -c 'echo "127.0.0.1 ci4app.local" >> /etc/hosts'
-
-composer create-project codeigniter4/appstarter ci4app
+docker build -t edersohe/ci4app .
+docker run --rm --user $(id -u):$(id -g) -v .:/var/www/html edersohe/ci4app sh -c "cd /mnt && composer create-project codeigniter4/appstarter ci4app"
 chmod ugo+rw -R ci4app/writable
-
 cp .env.example .env
-
 docker compose up
 ```
 
 ### Install Certs for HTTPS
 
 ```
-docker volume inspect ci4app-kickstart_mercure_data
+docker volume inspect $(basename $PWD)_mercure_data
 sudo cp -r MOUNT_POINT_FROM_INSPECT/caddy/pki/authorities/local certs
 sudo chown -R $USER:$USER certs
 ```
@@ -41,7 +39,7 @@ sudo chown -R $USER:$USER certs
 
 * Codeigniter 4 App: https://ci4app.local
 * Mercure Server: https://ci4app.local/.well-known/mercure/ui/
-* AdminerEvo: https://ci4app.local/adminer
+* PHPMyAdmin: https://ci4app.local/pma
 
 
 ### ToDo

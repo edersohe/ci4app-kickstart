@@ -1,8 +1,7 @@
 services:
   # CodeIgniter application service
   ci4app:
-    build:
-      context: .
+    image: edersohe/ci4app
     volumes:
       - ./ci4app:/var/www/html # Mount the local ci4app folder to the container
     environment:
@@ -40,12 +39,12 @@ services:
       MYSQL_USER: "${MYSQL_USER}"            # The database user
       MYSQL_PASSWORD: "${MYSQL_PASSWORD}"    # The database user password
 
-  # AdminerEvo
-  adminer:
-    image: ghcr.io/shyim/adminerevo:latest
+  # PHPMyAdmin
+  phpmyadmin:
+    image: phpmyadmin:latest
     environment:
-      ADMINER_DESIGN: "pepa-linha"
-      ADMINER_DEFAULT_SERVER: "mysql"
+      PMA_HOST: "mysql"
+      PMA_ABSOLUTE_URI: "https://${CI_DOMAIN}/pma/"
 
 # Define named volumes for data persistence
 volumes:
