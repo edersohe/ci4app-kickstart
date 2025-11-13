@@ -13,6 +13,7 @@ RUN apt update -y && apt dist-upgrade -y && apt-get install -y \
     libcurl4-openssl-dev \
     libzip-dev \
     libonig-dev \
+    libpq-dev \
     unzip \
     git \
     curl \
@@ -21,6 +22,7 @@ RUN apt update -y && apt dist-upgrade -y && apt-get install -y \
 
 # Install required extensions by Codeigniter
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp \
+    && docker-php-ext-configure pgsql --with-pgsql=/usr/local/pgsql \
     && docker-php-ext-install -j$(nproc) \
     intl \
     mbstring \
@@ -30,6 +32,7 @@ RUN docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp \
     dom \
     xml \
     mysqli \
+    pgsql \
     opcache \
     zip
 
