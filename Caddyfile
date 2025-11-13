@@ -2,10 +2,15 @@
 
     # Enable Mercure
     mercure {
-        use_forwarded_headers true
         publisher_jwt {$MERCURE_PUBLISHER_JWT}
         subscriber_jwt {$MERCURE_SUBSCRIBER_JWT}
-        debug true
+        # Permissive configuration for the development environment
+        # Comment for production use
+        cors_origins *
+        publish_origins *
+        demo
+        anonymous
+        subscriptions
     }
 
     # Enable adminer path

@@ -6,7 +6,7 @@
     - PHP-FPM Server
     - PHP Extensions enabled for development with Codeigniter 4
 * Mercure Server (Caddy + Mercure)
-    - Proxy to PHP FPM (ci4app) and PHPMyAdmin
+    - Proxy to PHP FPM (ci4app) and Adminer
     - Handle static files
     - Enable Mercure Hub (Real-Time Pub/Sub over HTTP/SSE)
 * MySQL
