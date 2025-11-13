@@ -11,7 +11,7 @@
     - Enable Mercure Hub (Real-Time Pub/Sub over HTTP/SSE)
 * MySQL
     - Database used by default for app development with Codeigniter 4
-* PHPMyAdmin
+* Adminer
     - Database administration tool
 
 ### Enable development enviroment
@@ -39,8 +39,7 @@ sudo chown -R $USER:$USER certs
 
 * Codeigniter 4 App: https://ci4app.local
 * Mercure Server: https://ci4app.local/.well-known/mercure/ui/
-* PHPMyAdmin: https://ci4app.local/pma
-
+* Adminer: https://ci4app.local/adminer
 
 ### ToDo
 

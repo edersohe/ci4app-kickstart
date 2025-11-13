@@ -39,12 +39,12 @@ services:
       MYSQL_USER: "${MYSQL_USER}"            # The database user
       MYSQL_PASSWORD: "${MYSQL_PASSWORD}"    # The database user password
 
-  # PHPMyAdmin
-  phpmyadmin:
-    image: phpmyadmin:latest
+  # Adminer
+  adminer:
+    image: adminer
     environment:
-      PMA_HOST: "mysql"
-      PMA_ABSOLUTE_URI: "https://${CI_DOMAIN}/pma/"
+      ADMINER_DEFAULT_SERVER: "mysql"
+      ADMINER_DESIGN: "nette"
 
 # Define named volumes for data persistence
 volumes:

@@ -8,15 +8,15 @@
         debug true
     }
 
-    # Enable phpmyadmin path
-    @pma {
-        path /pma
+    # Enable adminer path
+    @adminer {
+        path /adminer
     }
-    redir @pma /pma/
+    redir @adminer /adminer/
 
-    route /pma* {
-        uri strip_prefix /pma
-        reverse_proxy http://phpmyadmin:80 {
+    route /adminer* {
+        uri strip_prefix /adminer
+        reverse_proxy http://adminer:8080 {
             header_up X-Real-IP {remote_host}
             header_up X-Forwarded-For {remote_host}
         }
@@ -26,7 +26,7 @@
     root * /var/www/html/public
 
     # Ensure that requests for Adminer and Mercure are excluded from CodeIgniter routing
-    @ci4app not path /pma* /.well-known*
+    @ci4app not path /adminer* /.well-known*
 
     # Define the try_files directive for CodeIgniter's front controller
     handle @ci4app {
