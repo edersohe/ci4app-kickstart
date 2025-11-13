@@ -11,6 +11,8 @@
     - Enable Mercure Hub (Real-Time Pub/Sub over HTTP/SSE)
 * MySQL
     - Database used by default for app development with Codeigniter 4
+* PostgreSQL
+    - Alternative database for app development with Codeigniter 4
 * Adminer
     - Database administration tool
 

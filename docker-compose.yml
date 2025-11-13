@@ -7,10 +7,11 @@ services:
     environment:
       CI_ENVIRONMENT: "${CI_ENVIRONMENT}"
       app_baseURL: "https://${CI_DOMAIN}"
-      database_default_hostname: mysql
-      database_default_database: "${MYSQL_DATABASE}"
-      database_default_username: "${MYSQL_USER}"
-      database_default_password: "${MYSQL_PASSWORD}"
+      database_default_dbdriver: "${DB_DRIVER}"
+      database_default_hostname: "${DB_HOST}"
+      database_default_database: "${DB_NAME}"
+      database_default_username: "${DB_USER}"
+      database_default_password: "${DB_PASS}"
 
   # Caddy server with Mercure enabled
   mercure:
@@ -35,19 +36,30 @@ services:
       - mysql_data:/var/lib/mysql # Store MySQL data in a named volume
     environment:
       MYSQL_ROOT_PASSWORD: "password" # Change this to your root password
-      MYSQL_DATABASE: "${MYSQL_DATABASE}"          # The default database name for your app
-      MYSQL_USER: "${MYSQL_USER}"            # The database user
-      MYSQL_PASSWORD: "${MYSQL_PASSWORD}"    # The database user password
+      MYSQL_DATABASE: "${DB_NAME}"          # The default database name for your app
+      MYSQL_USER: "${DB_USER}"            # The database user
+      MYSQL_PASSWORD: "${DB_PASSWORD}"    # The database user password
+
+  # PostgreSQL database service
+  postgres:
+    image: pgvector/pgvector:pg18
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASS}
+      POSTGRES_DB: ${DB_NAME}
+    volumes:
+      - postgres_data:/var/lib/postgresql
 
   # Adminer
   adminer:
     image: adminer
     environment:
-      ADMINER_DEFAULT_SERVER: "mysql"
+      ADMINER_DEFAULT_SERVER: ${DB_HOST}
       ADMINER_DESIGN: "nette"
 
 # Define named volumes for data persistence
 volumes:
   mysql_data:
+  postgres_data:
   mercure_data:
   mercure_config:
