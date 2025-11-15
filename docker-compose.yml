@@ -38,7 +38,7 @@ services:
       MYSQL_ROOT_PASSWORD: "password" # Change this to your root password
       MYSQL_DATABASE: "${DB_NAME}"          # The default database name for your app
       MYSQL_USER: "${DB_USER}"            # The database user
-      MYSQL_PASSWORD: "${DB_PASSWORD}"    # The database user password
+      MYSQL_PASSWORD: "${DB_PASS}"    # The database user password
 
   # PostgreSQL database service
   postgres:
